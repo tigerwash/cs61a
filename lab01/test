@@ -1,0 +1,35 @@
+def falling(n, k):
+    m = n
+    if k == 0:
+        return 1
+    elif k == 1:
+        return n
+    else:
+        while k >1:
+            m = m * (n-1)
+            n = n -1
+            k = k - 1
+        return m
+
+def double_eights(n):
+    flag = False
+    while n != 0:
+        num = n % 10
+        if num == 8:
+            if flag:
+                return True
+            else:
+                flag = True
+        n /= 10
+        flag = False
+
+    return False
+
+    # x = 1, y = 2
+    # if x = y:
+    #     return true
+    # if n =
+    # else:
+    #     x = n % 10
+    #     n = n // 10
+    #     y = n % 10
