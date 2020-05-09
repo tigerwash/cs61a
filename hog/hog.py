@@ -143,63 +143,59 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     player = 0  # Which player is about to take a turn, 0 (first) or 1 (second)
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
-    #当一方达到终点后另外一方不需要投了
-    #以下不知道错在哪
-    # m = 0
-    # while score1 < goal and score0 < goal:
-    #
-    #     score0 = score0 + take_turn(strategy0(score0, score1), score1, dice)
-    #     print (score0, 's0')
-    #
-    #     if score0 >= goal:
-    #         return score0 , score1
-    #
-    #     if is_swap(score0, score1) == True:
-    #         k = score0
-    #         score0 = score1
-    #         score1 = k
-    #
-    #     score1 = score1 + take_turn(strategy1(score1, score0), score0, dice)
-    #     print (score1, 's1')
-    #     if is_swap(score0, score1) == True:
-    #         k = score0
-    #         score0 = score1
-    #         score1 = k
-    #
-    #     m = m + 10
-    #     print (m)
-    #
-    # return score0, score1
-    #以上是废版本
-    t = 1
-    while score0 < goal and score1 < goal:
+#     t = 1
+#     while score0 < goal and score1 < goal:
 
-        if player == 0 :
-            score0 = score0 + take_turn(strategy0(score0, score1), score1, dice)
-        else :
-            score1 = score1 + take_turn(strategy1(score1, score0), score0, dice)
+#         if player == 0 :
+#             score0 = score0 + take_turn(strategy0(score0, score1), score1, dice)
+#         else :
+#             score1 = score1 + take_turn(strategy1(score1, score0), score0, dice)
 
-        player = 1 - player
+#         player = 1 - player
+
+#         if is_swap(score0, score1) == True:
+#             k = score0
+#             score0 = score1
+#             score1 = k
+
+#         #BEGIN PROBLEM 6
+#         if t == 1:
+#             c = say(score0, score1)
+#             t = t * (-1)
+#         else:
+#             c = c(score0, score1)
+#             t = t * (-1)
+#         # END PROBLEM 6
+
+
+#     return score0, score1
+#         #say(score0, score1)
+
+#     # END PROBLEM 5
+        #ANSWER
+    while score0<goal and score1<goal:
+        if player == 0:
+            num_rolls = strategy0(score0, score1)
+            score0 += take_turn(num_rolls, score1, dice)
+        if player == 1:
+            num_rolls = strategy1(score1, score0)
+            score1 += take_turn(num_rolls, score0, dice)
 
         if is_swap(score0, score1) == True:
-            k = score0
-            score0 = score1
-            score1 = k
+            score0, score1 = score1, score0
 
-        #BEGIN PROBLEM 6
-        if t == 1:
-            c = say(score0, score1)
-            t = t * (-1)
-        else:
-            c = c(score0, score1)
-            t = t * (-1)
-        # END PROBLEM 6
-
-
-    return score0, score1
-        #say(score0, score1)
+        player = other(player)
 
     # END PROBLEM 5
+    # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
+    # BEGIN PROBLEM 6
+
+        say = say(score0, score1)
+
+    # END PROBLEM 6
+    return score0, score1
+
+       
 
 
 
@@ -291,14 +287,13 @@ def announce_highest(who, previous_high=0, previous_score=0):
             current_score = score0
         else:
             current_score = score1
+
         gain = current_score - previous_score
-        if gain > previous_score:
-            # if gain == 1:
-            #     print('1 point! That\'s the biggest gain yet for Player', who)
-            # else:
+        if gain > previous_high:
             print(gain, 'point(s)! That\'s the biggest gain yet for Player', who)
             return announce_highest(who, gain, current_score)
-        return announce_highest(who, previous_high, current_score)
+        else:
+            return announce_highest(who, previous_high, current_score)
     return say
 
     # END PROBLEM 7
