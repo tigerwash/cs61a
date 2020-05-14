@@ -81,6 +81,42 @@ def pingpong(n):
     True
     """
     "*** YOUR CODE HERE ***"
+        # ----iteration version
+    # h = 1
+    # k = 1
+    # count = 1
+    #
+    # while count < n:
+    #     if has_seven(count) or count % 7 == 0:
+    #         h = h * (-1)
+    #     move = lambda x: x + h
+    #     k = move(k)
+    #     count += 1
+    # return k
+    # ----end iteration
+
+    # ----recursion answer 1
+    # def helper(k, i, increment = 1):
+    #     if n == k:
+    #         return i
+    #     if (k % 7 == 0) or has_seven(k):
+    #         increment = -increment
+    #     return helper(k+1, i+increment, increment)
+    # return helper(1, 1)
+    # ----end recursion answer 1
+
+    def move(x, count, step):
+        if count == n:
+            return x
+        return move(x + step, count + 1, next_dir(step, count + 1))
+
+    def next_dir(step, count):
+        if count % 7 == 0 or has_seven(count):
+            return -step
+        return step
+
+    return move(1, 1, 1)
+
 
 def accumulate(combiner, base, n, term):
     """Return the result of combining the first n terms in a sequence and base.
