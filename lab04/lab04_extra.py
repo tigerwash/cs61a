@@ -16,6 +16,13 @@ def flatten(lst):
     [1, 1, 1, 1, 1, 1]
     """
     "*** YOUR CODE HERE ***"
+    lstflat = []
+    for i in lst:
+        if type(i) != list:
+            lstflat += [i]
+        else:
+            lstflat += flatten(i)
+    return lstflat
 
 # Q7
 def merge(lst1, lst2):
