@@ -59,7 +59,7 @@ def prune_leaves(t, vals):
     "*** YOUR CODE HERE ***"
     # if is_leaf(t):
     #     for i in vals:
-    #         if label(t) == i:
+    #         if label(t) == i: #我这个if 咋就不对了
     #             t = []
     #             return t
     #         else:
@@ -70,16 +70,24 @@ def prune_leaves(t, vals):
     #     new_branches = [prune_leaves(branch, vals) for branch in branches(t)]
     #     return tree(label(t), new_branches)
 
-    if not t.subtrees:
-        if t.entry not in vals:
-            return t
-        else:
+    #solution:
+    if is_leaf(t):
+        if label(t) in vals:
             return None
-    new_branches = [prune_leaves(branch, vals) for branch in t.subtrees]
-    t.subtrees = [b for b in new_branches if b is not None]
-    return t
+        else:
+            return t
 
+    else:
+        new_branches = [prune_leaves(b, vals) for b in branches(t)]
+        subtrees = [b for b in new_branches if b is not None] ## 若為None，需要去掉，所以不可以直接用new_branches進行構造tree
+        return tree(label(t), subtrees)
 
+    #solution 2
+    # if label(t) == vals:
+    #     return None
+    # if is_leaf(t):
+    #     return tree(label(t), [t.remove(i) for i in vals])
+    # return tree(label(t), [prune_leaves(r, vals) for r in branches(t)])
 
 
 # Q3
@@ -94,6 +102,14 @@ def memory(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    def fun(g):
+        nonlocal n
+        n = g(n)
+        return n
+    return fun
+
+
+
 
 # Tree ADT
 def tree(label, branches=[]):
