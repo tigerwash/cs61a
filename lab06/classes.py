@@ -84,7 +84,11 @@ class Player(object):
         self.deck = deck
         self.name = name
         "*** YOUR CODE HERE ***"
-        self.card =
+        self.hand = []
+        card_hand = 1
+        while card_hand <= 5:
+            self.hand += [self.deck.draw()]
+            card_hand += 1
 
     def draw(self):
         """Draw a card from the player's deck and add it to their hand.
@@ -99,6 +103,7 @@ class Player(object):
         """
         assert not self.deck.is_empty(), 'Deck is empty!'
         "*** YOUR CODE HERE ***"
+        self.hand.append(self.deck.draw())
 
     def play(self, card_index):
         """Remove and return a card from the player's hand at the given index.
@@ -115,7 +120,10 @@ class Player(object):
         2
         """
         "*** YOUR CODE HERE ***"
-
+        # this = self.hand[card_index]
+        # self.hand.pop(card_index)
+        # return this
+        return self.hand.pop(card_index)   #pop means return this number to you and remove it from the origional list
 
     def display_hand(self):
         """
@@ -156,8 +164,17 @@ class TutorCard(Card):
         True
         """
         "*** YOUR CODE HERE ***"
-        #Uncomment the line below when you've finished implementing this method!
-        #print('{} discarded and re-drew 3 cards!'.format(opponent.name))
+        # Uncomment the line below when you've finished implementing this method!
+        print('{} discarded and re-drew 3 cards!'.format(opponent.name))
+        i = 0
+        while i <= 2:
+            del opponent.hand[0]
+            opponent.hand += [opponent.deck.draw()]
+            i += 1
+
+
+
+
 
     def copy(self):
         """
@@ -182,6 +199,7 @@ class TACard(Card):
         300
         """
         "*** YOUR CODE HERE ***"
+        other_card.attack, other_card.defense = other_card.defense, other_card.attack
 
 
     def copy(self):
