@@ -231,11 +231,19 @@ class ProfessorCard(Card):
         """
         orig_opponent_deck_length = len(opponent.deck.cards)
         "*** YOUR CODE HERE ***"
+        for card in player.deck.cards:
+            card.attack += other_card.attack
+            card.defense += other_card.defense
+        for card in opponent.deck.cards[:]:
+            if card.attack == other_card.attack or card.defense == other_card.defense:
+                opponent.deck.cards.remove(card)
+
         discarded = orig_opponent_deck_length - len(opponent.deck.cards)
         if discarded:
             #Uncomment the line below when you've finished implementing this method!
-            #print('{} cards were discarded from {}\'s deck!'.format(discarded, opponent.name))
+            print('{} cards were discarded from {}\'s deck!'.format(discarded, opponent.name))
             return
+
 
     def copy(self):
         return ProfessorCard(self.name, self.attack, self.defense)
