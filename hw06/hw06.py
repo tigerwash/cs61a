@@ -80,9 +80,35 @@ class VendingMachine:
     def __init__(self, product, price):
         self.product = product
         self.price = price
-        self.deposit = 0
+        self.balance = 0
+        self.stock = 0
 
-    def vend:
-        if self.deposit == 0:
-            print('Machine is out of stock.')
+    def vend(self):
+        if self.stock <= 0:
+            return 'Machine is out of stock.'
+        else:
+            if self.balance < self.price:
+                need = self.price - self.balance
+                return 'You must deposit ${0} more.'.format(need)
+            elif self.balance == self.price:
+                self.stock -= 1
+                return 'Here is your {0}.'.format(self.product)
+            else:
+                change = self.balance - self.price
+                self.stock -= 1
+                self.balance = 0
+                return 'Here is your {0} and ${1} change.'.format(self.product, change)
+
+    def deposit(self, amount):
+
+        if self.stock > 0:
+            self.balance = self.balance + amount
+            return 'Current balance: ${0}'.format(self.balance)
+        else:
+            return 'Machine is out of stock. Here is your ${0}.'.format(amount)
+
+
+    def restock(self, number):
+        self.stock = self.stock + number
+        return 'Current {0} stock: {1}'.format(self.product, self.stock)
             
