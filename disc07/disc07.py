@@ -121,50 +121,50 @@ class Link:
         self.rest.first = value
 
 
-# def multiply_lnks(lst_of_lnks):
-#     """
-#     >>> a = Link(2, Link(3, Link(5)))
-#     >>> b = Link(6, Link(4, Link(2)))
-#     >>> c = Link(4, Link(1, Link(0, Link(2))))
-#     >>> p = multiply_lnks([a, b, c])
-#     >>> p.first
-#     48
-#     >>> p.rest.first
-#     12
-#     >>> p.rest.rest.rest
-#     ()
-#     """
-#     k = 1
-#     if Link.empty in lst_of_lnks:
-#         return Link.empty
-#     for i in lst_of_lnks:
-#
-#         k *= i.first
-#
-#     restlinks = [i.rest for i in lst_of_lnks]
-#     out = Link(k, multiply_lnks(restlinks))
-#     return out
+def multiply_lnks(lst_of_lnks):
+    """
+    >>> a = Link(2, Link(3, Link(5)))
+    >>> b = Link(6, Link(4, Link(2)))
+    >>> c = Link(4, Link(1, Link(0, Link(2))))
+    >>> p = multiply_lnks([a, b, c])
+    >>> p.first
+    48
+    >>> p.rest.first
+    12
+    >>> p.rest.rest.rest
+    ()
+    """
+    k = 1
+    if Link.empty in lst_of_lnks:
+        return Link.empty
+    for i in lst_of_lnks:
+
+        k *= i.first
+
+    restlinks = [i.rest for i in lst_of_lnks]
+    out = Link(k, multiply_lnks(restlinks))
+    return out
 
 
-# def remove_duplicates(lnk):
-#     """
-#     >>> lnk = Link(1, Link(1, Link(1, Link(1, Link(5)))))
-#     >>> remove_duplicates(lnk)
-#     >>> lnk
-#     Link(1, Link(5))
-#     """
-#     # not working
-#     # pool = Link.empty
-#     # while lnk is not Link.empty or lnk.rest is not Link.empty:
-#     #     # print(lnk.first)
-#     #
-#     #     # lnk = lnk.rest
-#     #     if lnk.first in pool:
-#     #         lnk = lnk.rest.rest
-#     #     else:
-#     #         lnk = lnk.rest
-#     #
-#     #     pool.append(list(lnk[0]))
+def remove_duplicates(lnk):
+    """
+    >>> lnk = Link(1, Link(1, Link(1, Link(1, Link(5)))))
+    >>> remove_duplicates(lnk)
+    >>> lnk
+    Link(1, Link(5))
+    """
+    # not working
+    # pool = Link.empty
+    # while lnk is not Link.empty or lnk.rest is not Link.empty:
+    #     # print(lnk.first)
+    #
+    #     # lnk = lnk.rest
+    #     if lnk.first in pool:
+    #         lnk = lnk.rest.rest
+    #     else:
+    #         lnk = lnk.rest
+    #
+    #     pool.append(list(lnk[0]))
 #------------------------------
     # solution iteration
     # while lst is not Link.empty or lst.rest is not Link.empty:
@@ -173,58 +173,58 @@ class Link:
     #     else:
     #         lst = lst.rest
 
-    #solution recution
-    # if lnk == Link.empty or lnk.rest == Link.empty:
-    #     return
-    # if lnk.first == lnk.rest.first:
-    #     lnk.rest = lnk.rest.rest
-    #     remove_duplicates(lnk)
-    # else:
-    #     remove_duplicates(lnk.rest)
+    solution recution
+    if lnk == Link.empty or lnk.rest == Link.empty:
+        return
+    if lnk.first == lnk.rest.first:
+        lnk.rest = lnk.rest.rest
+        remove_duplicates(lnk)
+    else:
+        remove_duplicates(lnk.rest)
 
-# def even_weighted(lst):
-#     """
-#     >>> x = [1, 2, 3, 4, 5, 6]
-#     >>> even_weighted(x)
-#     [0, 6, 20]
-#     """
-#     return [i * lst[i] for i in range(len(lst)) if i % 2 == 0]
+def even_weighted(lst):
+    """
+    >>> x = [1, 2, 3, 4, 5, 6]
+    >>> even_weighted(x)
+    [0, 6, 20]
+    """
+    return [i * lst[i] for i in range(len(lst)) if i % 2 == 0]
 
 
-# def quicksort_list(lst):
-#     """
-#     >>> quicksort_list([3, 1, 4, 2, 5, 6])
-#     [1, 2, 3, 4, 5, 6]
-#     """
-#     if not lst or len(lst) == 1:
-#         return lst
-#     pivot = lst[0]
-#     less = [i for i in lst if i < pivot]
-#     greater = [i for i in lst if i > pivot]
-#     return quicksort_list(less) + [pivot] + quicksort_list(greater)
+def quicksort_list(lst):
+    """
+    >>> quicksort_list([3, 1, 4, 2, 5, 6])
+    [1, 2, 3, 4, 5, 6]
+    """
+    if not lst or len(lst) == 1:
+        return lst
+    pivot = lst[0]
+    less = [i for i in lst if i < pivot]
+    greater = [i for i in lst if i > pivot]
+    return quicksort_list(less) + [pivot] + quicksort_list(greater)
 
-# def max_product(lst):
-#     """Return the maximum product that can be formed using lst
-#     without using any consecutive numbers
-#     >>> max_product([10,3,1,9,2]) # 10 * 9
-#     90
-#     >>> max_product([5,10,5,10,5]) # 5 * 5 * 5
-#     125
-#     >>> max_product([])
-#     1
-#     """
-#     # if not lst:
-#     #     return 1
-#     # elif len(lst) == 1:
-#     #     return lst[0]
-#     # max(lst[0] * max_product(lst[2:]), max_product(lst[1:]))
-#
-#     if not lst:
-#         return 1
-#     elif len(lst) == 1:
-#         return lst[0]
-#     else:
-#         return  max(max_product(lst[1:]), lst[0] * max_product(lst[2: ]))
+def max_product(lst):
+    """Return the maximum product that can be formed using lst
+    without using any consecutive numbers
+    >>> max_product([10,3,1,9,2]) # 10 * 9
+    90
+    >>> max_product([5,10,5,10,5]) # 5 * 5 * 5
+    125
+    >>> max_product([])
+    1
+    """
+    # if not lst:
+    #     return 1
+    # elif len(lst) == 1:
+    #     return lst[0]
+    # max(lst[0] * max_product(lst[2:]), max_product(lst[1:]))
+
+    if not lst:
+        return 1
+    elif len(lst) == 1:
+        return lst[0]
+    else:
+        return  max(max_product(lst[1:]), lst[0] * max_product(lst[2: ]))
 
 def redundant_map(t, f):
     """
