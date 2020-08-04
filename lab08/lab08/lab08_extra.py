@@ -28,22 +28,46 @@ class Keyboard:
 
     def __init__(self, *args):
         "*** YOUR CODE HERE ***"
+        # self.buttons = {i.pos : i for i in args }
+        self.buttons = {}
+        for button in args:
+            self.buttons[button.pos] = button
+
 
     def press(self, info):
         """Takes in a position of the button pressed, and
         returns that button's output"""
         "*** YOUR CODE HERE ***"
 
+        # self.buttons[info].times_pressed += 1
+        return self.buttons[info].press()
+
+
     def typing(self, typing_input):
         """Takes in a list of positions of buttons pressed, and
         returns the total output"""
         "*** YOUR CODE HERE ***"
+        # output = str()
+        # for i in typing_input:
+        #     output += self.press(i)
+        # return output
+        #
+        res = ''
+        for i in typing_input:
+            res += self.buttons[i].press()
+        return res
+
+
 
 class Button:
     def __init__(self, pos, key):
         self.pos = pos
         self.key = key
         self.times_pressed = 0
+
+    def press(self):
+        self.times_pressed += 1
+        return self.key
 
 # Nonlocal
 def make_advanced_counter_maker():
@@ -76,6 +100,26 @@ def make_advanced_counter_maker():
     1
     """
     "*** YOUR CODE HERE ***"
+    def make_counter():
+        def counter(message):
+            if message == 'count':
+                counter.count += 1
+                return counter.count
+            elif message == 'global-count':
+                make_counter.global_count += 1
+                return make_counter.global_count
+            elif message == 'reset':
+                counter.count = 0
+                return
+            elif message == 'global-reset':
+                make_counter.global_count = 0
+                return
+        counter.count = 0
+        return counter
+    make_counter.global_count = 0
+    return make_counter
+
+
 
 # Lists
 def trade(first, second):
@@ -108,8 +152,14 @@ def trade(first, second):
     m, n = 1, 1
 
     "*** YOUR CODE HERE ***"
+    is_equal = lambda : sum(first[:m]) == sum(second[:n])
+    while m <= len(first) and n <= len(second) and not is_equal():
+        if sum(first[:m]) < sum(second[:n]):
+            m += 1
+        else:
+            n += 1
 
-    if False: # change this line!
+    if is_equal(): # change this line!
         first[:m], second[:n] = second[:n], first[:m]
         return 'Deal!'
     else:
@@ -139,12 +189,12 @@ def permutations(seq):
     >>> sorted(permutations("ab"))
     [['a', 'b'], ['b', 'a']]
     """
-    if ____________________:
-        yield ____________________
+    if not seq:
+        yield []
     else:
-        for perm in _____________________:
-            for _____ in ________________:
-                _________________________
+        for perm in permutations(seq[1:]):
+            for i in range(len(perm) + 1):
+                yield perm[:i] + [seq[0]] + perm[i:]
 
 # Recursive objects
 def make_to_string(front, mid, back, empty_repr):
