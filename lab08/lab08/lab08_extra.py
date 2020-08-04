@@ -213,6 +213,13 @@ def make_to_string(front, mid, back, empty_repr):
     '()'
     """
     "*** YOUR CODE HERE ***"
+    def make(lst):
+        if not lst:
+            return empty_repr
+        else:
+            return front + str(lst.first) + mid + make(lst.rest) + back
+    return make
+
 
 def tree_map(fn, t):
     """Maps the function fn over the entries of t and returns the
@@ -246,6 +253,12 @@ def tree_map(fn, t):
         8
     """
     "*** YOUR CODE HERE ***"
+    if t.is_leaf():
+        return Tree(fn(t.label))
+    else:
+        return Tree(fn(t.label), [tree_map(fn, i) for i in t.branches])
+
+
 
 def long_paths(tree, n):
     """Return a list of all paths in tree with length at least n.
@@ -277,6 +290,14 @@ def long_paths(tree, n):
     [Link(0, Link(11, Link(12, Link(13, Link(14)))))]
     """
     "*** YOUR CODE HERE ***"
+    paths = []
+    if n <= 0 and tree.is_leaf():
+        paths.append(Link(tree.label))
+    else:
+        for b in tree.branches:
+            for i in long_paths(b, n-1):
+                paths.append(Link(tree.label, i))
+    return paths
 
 # Orders of Growth
 def zap(n):
